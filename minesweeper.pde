@@ -28,52 +28,12 @@ void setup() {
   mine = loadImage("mine.PNG");
   flag = loadImage("flag.PNG");
   bg = loadImage("board.PNG");
-  for (int i = 0; i < 10; i++) {
-    int x = round(random(0,7));
-    int y = round(random(0,7));
-    if (board[x][y]!=bomb) {
-      board[x][y] = bomb;
-    } else {
-      i--;
-    }
-  }
+  initboard();
 }
 
 void draw() {
   background(bg);
-  for (int i=0; i<8; i++) {
-    for (int j=0; j<8; j++) {
-      if (tiles[i][j]==1) {
-        image(tile, j*30, i*30, 30, 30);
-      } else if (tiles[i][j]==2) {
-        image(flag, j*30, i*30, 30, 30);
-      } else if (tiles[i][j]==0) {
-        if (board[i][j]!=0&&board[i][j]!=10) {
-          if (board[i][j]==1) {
-            fill(0,0,255);
-          } else if (board[i][j]==2) {
-            fill(0,200,0);
-          } else if (board[i][j]==3) {
-            fill(255,0,0);
-          } else if (board[i][j]==4) {
-            fill(20,0,130);
-          } else if (board[i][j]==5) {
-            fill(125,0,0);
-          } else if (board[i][j]==6) {
-            fill(0,150,150);
-          } else if (board[i][j]==7) {
-            fill(0);
-          } else if (board[i][j]==8) {
-            fill(70);
-          }
-          text(board[i][j], j*30+6, i*30+23);
-        } else if (board[i][j]==10) {
-          image(mine, j*30, i*30, 30, 30);
-        }
-      }
-    }
-  }
-  initboard();
+  showtiles();
 }
 
 void mousePressed() {
@@ -156,6 +116,15 @@ void mousePressed() {
 }
 
 void initboard() {
+  for (int i = 0; i < 10; i++) {
+    int x = round(random(0,7));
+    int y = round(random(0,7));
+    if (board[x][y]!=bomb) {
+      board[x][y] = bomb;
+    } else {
+      i--;
+    }
+  }
   for (int i=0; i<8; i++) { //i is cols (x) and j is rows (y)
     for (int j=0; j<8; j++) {
       if (board[i][j]!=bomb) {
@@ -208,6 +177,41 @@ void initboard() {
           if (board[i+1][j-1]==bomb) { board[i][j]++; }
           if (board[i][j-1]==bomb) { board[i][j]++; }
           if (board[i][j+1]==bomb) { board[i][j]++; }
+        }
+      }
+    }
+  }
+}
+
+void showtiles() {
+  for (int i=0; i<8; i++) {
+    for (int j=0; j<8; j++) {
+      if (tiles[i][j]==1) {
+        image(tile, j*30, i*30, 30, 30);
+      } else if (tiles[i][j]==2) {
+        image(flag, j*30, i*30, 30, 30);
+      } else if (tiles[i][j]==0) {
+        if (board[i][j]!=0&&board[i][j]!=10) {
+          if (board[i][j]==1) {
+            fill(0,0,255);
+          } else if (board[i][j]==2) {
+            fill(0,200,0);
+          } else if (board[i][j]==3) {
+            fill(255,0,0);
+          } else if (board[i][j]==4) {
+            fill(20,0,130);
+          } else if (board[i][j]==5) {
+            fill(125,0,0);
+          } else if (board[i][j]==6) {
+            fill(0,150,150);
+          } else if (board[i][j]==7) {
+            fill(0);
+          } else if (board[i][j]==8) {
+            fill(70);
+          }
+          text(board[i][j], j*30+6, i*30+23);
+        } else if (board[i][j]==10) {
+          image(mine, j*30, i*30, 30, 30);
         }
       }
     }
