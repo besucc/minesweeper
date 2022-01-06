@@ -66,7 +66,7 @@ void setup() {
 
 void draw() {
   if (started) {
-    if (!lost) {
+    if (!lost&&!won) {
       image(bg, 0, 0);
       image(bg, 240, 0);
       image(bg, 0, 240);
@@ -76,8 +76,14 @@ void draw() {
       image(bg, 240, 480);
       image(bg, 480, 240);
       image(bg, 480, 480);
+      showtiles();
+      wincheck();
+    } else {
+      if (won) {
+        fill(0);
+        text("you win!!", 50, 50);
+      }
     }
-    showtiles();
   } else {
     fill(0);
     text("Choose difficulty", 100, 100);
@@ -303,5 +309,19 @@ void showtiles() {
         }
       }
     }
+  }
+}
+
+void wincheck() {
+  boolean found = false;
+  for (int i=0; i<size; i++) {
+    for (int j=0; j<size; j++) {
+      if ((tiles[i][j]==1||tiles[i][j]==2)&&board[i][j]!=bomb) {
+        found = true;
+      }
+    }
+  }
+  if (!found) {
+    won = true;
   }
 }
